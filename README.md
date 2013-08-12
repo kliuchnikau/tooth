@@ -30,19 +30,12 @@ from you tests:
       end
 
       # components_divs
-      component :component1, TestPageComponent, 'div#component1-id'
-      component :component1_lambda, TestPageComponent, ->(id){ "div#component1-#{id}" }
+      component :component1, NavigationComponent, 'div#component1-id'
+      component :component1_lambda, NavigationComponent, ->(id){ "div#component1-#{id}" }
 
       # components2_divs
       within '#scope-two' do
-        component :component2, TestPageComponent, 'div#component1-id'
-      end
-
-      # within nesting
-      within '#scope-two' do
-        within '#component1-id' do
-          element :nested_in_within, '.second-lvl'
-        end
+        component :component2, NavigationComponent, 'div#component1-id'
       end
     end
 
