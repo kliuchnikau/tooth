@@ -1,35 +1,28 @@
 module PageObject
-  def within scope_locator
-    set_scope(scope_locator)
-    yield
-  ensure
-    unset_scope(scope_locator)
+  def within scope_locator, &block
+    within_scope_klass = Class.new
+    within_scope_klass.extend PageObject
+    within_scope_klass.instance_variable_set :@page_element, page_element
+    within_scope_klass.element_with_finders = -> { element_with_finders.find(scope_locator) }
+    within_scope_klass.class_eval &block
   end
 
   def link name, locator
     page_element[name] = ->(*args){ element_with_finders.find_link(locator_string(locator, args)) }
-
-    ensure_scope(name)
   end
 
   def field name, locator
     page_element[name] = ->(*args){ element_with_finders.find_field(locator_string(locator, args)) }
-
-    ensure_scope(name)
   end
 
   def button name, locator
     page_element[name] = ->(*args){ element_with_finders.find_button(locator_string(locator, args)) }
-
-    ensure_scope(name)
   end
 
   def element name, locator, options = {}
     page_element[name] = ->(*args){
       element_with_finders.find(locator_string(locator, args), options)
     }
-
-    ensure_scope(name)
   end
 
   def component name, component_class, locator, options = {}
@@ -39,8 +32,6 @@ module PageObject
         cmp.element_with_finders = component_element
       end
     }
-
-    ensure_scope(name)
   end
 
   # convenience methods
@@ -61,34 +52,19 @@ module PageObject
   attr_writer :element_with_finders
 
   private
-  def get_scope
-    @scope
-  end
-  def set_scope val
-    @scope = val
-  end
-  def unset_scope val
-    @scope = nil
-  end
-
-  def ensure_scope(name)
-    if (scope_locator = get_scope)
-      element_locator = page_element[name]
-
-      page_element[name] = ->(*args){
-        element_with_finders.within(scope_locator) do
-          element_locator.call(*args)
-        end
-      }
-    end
-  end
-
   def locator_string(locator, args)
     locator.kind_of?(Proc) ? locator.call(*args) : locator
   end
 
   def page_element; @page_element ||= {} end
-  def element_with_finders; @element_with_finders || Capybara.current_session end
+
+  def element_with_finders
+    if @element_with_finders
+      @element_with_finders.kind_of?(Proc) ? @element_with_finders.call : @element_with_finders
+    else
+      Capybara.current_session
+    end
+  end
 
   def method_missing(meth, *args, &block)
     if( element_finder = page_element[meth.to_sym])
