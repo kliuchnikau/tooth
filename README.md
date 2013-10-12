@@ -5,7 +5,7 @@ Simple page objects for [Capybara](https://github.com/jnicklas/capybara)
 
 =====
 
-![](https://api.travis-ci.org/kliuchnikau/tooth.png "Build status")
+[![Build Status](https://api.travis-ci.org/kliuchnikau/tooth.png)](http://travis-ci.org/kliuchnikau/tooth)
 
 You can create page objects and page components using simple DSL.
 These page objects will incapsulate all selectors and remove duplication
