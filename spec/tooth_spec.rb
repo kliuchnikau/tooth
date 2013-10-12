@@ -44,7 +44,7 @@ describe PageObject do
     end
 
     # within nesting
-    within '#sope-two' do
+    within '#scope-two' do
       within '#component1-id' do
         element :nested_in_within, '.second-lvl'
       end
@@ -165,7 +165,6 @@ describe PageObject do
 
   describe '#within' do
     specify 'works with nesting' do
-      pending 'Need to implement multi-level within-nesting using nested anonymous components'
       visit '/components2_divs'
       expect(TestPageObject.nested_in_within.text).to eq 'Correct text'
     end
