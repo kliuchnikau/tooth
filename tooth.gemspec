@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'tooth'
   s.version     = '0.0.1'
-  s.date        = '2013-08-12'
+  s.date        = '2013-10-12'
   s.description = "Simple page objects for Capybara"
   s.summary     = "Simple page objects for Capybara"
   s.authors     = ["Aliaksei Kliuchnikau"]
