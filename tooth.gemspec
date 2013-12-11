@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'tooth'
-  s.version     = '0.2.0'
+  s.version     = '0.2.1'
   s.date        = '2013-12-11'
   s.description = 'Simple page objects for Capybara. All tooth-generated methods return Capybara Elements so that you can use these familiar objects for your needs.'
   s.summary     = 'Simple page objects for Capybara'

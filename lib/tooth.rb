@@ -1,3 +1,3 @@
 module Tooth
-  require 'tooth/page_object'
+  require_relative 'tooth/page_object'
 end
