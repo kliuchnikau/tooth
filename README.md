@@ -10,7 +10,7 @@ Simple page objects for [Capybara](https://github.com/jnicklas/capybara)
 How to install
 
     gem install tooth
-    
+
 or with bundler add the following line to your Gemfile:
 
     gem 'tooth'
@@ -32,6 +32,7 @@ from you tests:
       element :headline, 'div#some-id'
       element :some_div_lambda, ->(id){ "div#some-#{id}" }
       element :not_existing, '#not-existing-element'
+      elements :all_divs, 'div'
 
       # components_divs
       within 'div#component1-id' do
