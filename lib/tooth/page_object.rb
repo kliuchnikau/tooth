@@ -26,6 +26,12 @@ module Tooth
       }
     end
 
+    def elements name, locator, options = {}
+      page_element[name] = ->(*args){
+        element_with_finders.all(locator_string(locator, args), options)
+      }
+    end
+
     def component name, component_class, locator, options = {}
       page_element[name] = ->(*args){
         component_element = find(locator_string(locator, args), options)

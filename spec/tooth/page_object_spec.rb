@@ -25,6 +25,7 @@ module Tooth
       element :some_div, 'div#some-id'
       element :some_div_lambda, ->(id){ "div#some-#{id}" }
       element :not_existing, '#not-existing-element'
+      elements :all_divs, 'div'
 
       # components_divs
       within 'div#component1-id' do
@@ -70,6 +71,23 @@ module Tooth
       it 'Raise error when element is found' do
         visit '/simple_divs'
         expect{ TestPageObject.not_shows? { some_div } }.to raise_error
+      end
+    end
+
+    describe '#elements' do
+      it 'returns array of Capybara::Element' do
+        visit '/simple_divs'
+
+        expect(TestPageObject.all_divs.count).to eq 3
+        TestPageObject.all_divs.each do |div|
+          expect(div).to be_an_instance_of(Capybara::Node::Element)
+        end
+      end
+
+      it 'finds all elements by specified selector' do
+        visit '/simple_divs'
+
+        expect(TestPageObject.all_divs.map(&:text)).to match_array(['one', 'some', 'other'])
       end
     end
 
